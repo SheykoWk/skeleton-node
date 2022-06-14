@@ -1,0 +1,35 @@
+const chai = require('chai')
+const chaiHttp = require('chai-http')
+
+const {describe, it} = require('mocha');
+const app = require('../../app').app
+
+chai.use(chaiHttp)
+
+describe('Suite de test E2E de AUTH', () => {
+    it('Should return 200 and token for succesful login', (done) => {
+        chai.request(app)
+            .post('/api/v1/auth/login')
+                .set("content-type", "application/json")
+                .send({
+                    email : "sahid.kick@academlo.com",
+                    password : "root"
+                })
+                .end((err, res) => {
+                    chai.assert.equal(res.status, 200)
+                    chai.assert.typeOf(res.body.token, 'string')
+                    chai.request(app)
+                        .get('/api/v1/post')
+                        .set("Authorization", `JWT ${res.body.token}`)
+                        .end((err, res) => {
+                            chai.assert.equal(res.status, 200)
+                            done()
+                        })
+                })
+    })
+    // TODO : Crear un test E2E que cree un nuevo post
+    // TODO : Crear un test E2E que elimine el post creado
+})
+
+
+
