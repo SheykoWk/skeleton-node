@@ -35,13 +35,14 @@ const registerUser = (data) => {
     };
 };
 
-console.log(
-    registerUser({
-        name: 'Sahid',
-        email: 'admin@admin.com',
-        password: '1234',
-        username: 'root',
-        age: 21,
-        image_profile: '',
-    })
-);
+const getUserByEmail = (email) => {
+    const user = usersDB.filter((item) => item.email === email);
+    return user[0]
+}
+
+
+module.exports = {
+    registerUser,
+    getUserByEmail,
+    usersDB
+}

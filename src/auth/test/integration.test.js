@@ -1,10 +1,22 @@
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 
-const {describe, it} = require('mocha');
+const {describe, it, before} = require('mocha');
 const app = require('../../app').app
+const userControllers = require('../../users/users.controllers')
 
 chai.use(chaiHttp)
+
+before(() => {
+    userControllers.registerUser({
+        name : "Admin" ,
+        email : "sahid.kick@academlo.com" ,
+        password : "root" ,
+        username: "admin",
+        age: 21,
+        image_profile: ""
+    })
+})
 
 describe('Suite de testing de integracion para AUTH', () => {
     // ? Test a ruta protegida
