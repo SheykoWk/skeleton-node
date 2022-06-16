@@ -22,16 +22,23 @@ const usersDB = [];
 
 const models = initModels(sequelize)
 
-const registerUser = (data) => {
+const registerUser = async (data) => {
     const hashedPassword = crypto.hashPassword(data.password);
     const userId = uuid.v4();
-    const newUser = {
+    //! const newUser = {
+    //!     id: userId,
+    //!     ...data,
+    //!     password: hashedPassword
+    //! };
+    //! usersDB.push(newUser)
+
+    const newUser = models.users.create({
         id: userId,
         ...data,
         password: hashedPassword
-    };
-    console.log(newUser)
-    usersDB.push(newUser);
+    })
+    //? SQL Query: insert into users (id, ...data, password) values (.....)
+
     return {
         message: `User created succesfully with the id: ${userId}`,
         user: newUser,
@@ -39,7 +46,11 @@ const registerUser = (data) => {
 };
 
 const getAllUsers = async () => {
-    const users = await models.users.findAll()
+    const users = await models.users.findAll({
+        attributes : {
+            exclude: ["password"]
+        }
+    })
     // select * from users;
     return users
 }
