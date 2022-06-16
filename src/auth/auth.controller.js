@@ -3,14 +3,13 @@ const crypto = require('../utils/crypto');
 
 const checkUsersCredential = (email, password) => {
     const user = userControllers.getUserByEmail(email);
-    if(user.id) {
-        return crypto.comparePassword(password, user.password)
+    if (user.id) {
+        return crypto.comparePassword(password, user.password);
     } else {
-        return null
+        return null;
     }
-}
+};
 
 module.exports = {
-    checkUsersCredential
-}
-
+    checkUsersCredential,
+};

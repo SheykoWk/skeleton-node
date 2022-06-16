@@ -16,7 +16,7 @@ describe('Suite de test E2E de AUTH', () => {
                 password: 'root',
             })
             .end((err, res) => {
-                const token = req.body.token;
+                const token = res.body.token;
                 chai.assert.equal(res.status, 200);
                 chai.assert.typeOf(res.body.token, 'string');
                 chai.request(app)
@@ -45,7 +45,6 @@ describe('Suite de test E2E de AUTH', () => {
                     .get('/api/v1/post')
                     .set('Authorization', `JWT ${token}`)
                     .end((err, res) => {
-                        if(err) console.log(err)
                         chai.assert.equal(res.status, 200);
                         chai.request(app)
                             .post('/api/v1/post')

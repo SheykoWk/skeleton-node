@@ -1,9 +1,33 @@
-const express = require('express')
+const express = require('express');
+const config = require('./config');
+const cors = require('cors')
 
-const app = express()
+const authRouter = require('./auth/auth.routes').router
+const userControllers = require('./users/users.controllers')
 
+const app = express();
+
+app.use(express.json())
+app.use(cors())
+
+app.use('/api/v1/auth', authRouter)
+app.get('/api/v1/post', (req,res) => {
+    res.status(401).json()
+})
+
+app.get('/api/v1/users', (req, res) => {
+    userControllers.getAllUsers()
+        .then((response) => {
+            res.status(200).json(response)
+        })
+
+})
+
+
+app.listen(config.port, () => {
+    console.log(`Server started at port ${config.port}`)
+})
 
 module.exports = {
-    app
-}
-
+    app,
+};
