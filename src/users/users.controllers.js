@@ -45,6 +45,11 @@ const registerUser = async (data) => {
     };
 };
 
+const getUserById = async (id) => {
+    const user = await models.users.findByPk(id)
+    return user
+}
+
 const getAllUsers = async () => {
     const users = await models.users.findAll({
         attributes : {
@@ -55,14 +60,19 @@ const getAllUsers = async () => {
     return users
 }
 
-const getUserByEmail = (email) => {
-    const user = usersDB.filter((item) => item.email === email);
-    return user[0];
+const getUserByEmail = async (email) => {
+    const user = await models.users.findOne({
+        where: {
+            email
+        }
+    });
+    return user.dataValues;
 };
 
 module.exports = {
     registerUser,
     getUserByEmail,
     usersDB,
-    getAllUsers
+    getAllUsers,
+    getUserById
 };
