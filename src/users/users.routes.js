@@ -8,3 +8,7 @@ router.route('/my-profile')
         passport.authenticate('jwt', { session: false }),
         userHttpHandler.getMyUserData
     );
+
+module.exports = {
+    router
+}

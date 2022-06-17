@@ -61,12 +61,12 @@ const getAllUsers = async () => {
 }
 
 const getUserByEmail = async (email) => {
-    const user = await models.users.findOne({
+    const user = await models.users.findAll({
         where: {
             email
         }
     });
-    return user.dataValues;
+    return user;
 };
 
 module.exports = {

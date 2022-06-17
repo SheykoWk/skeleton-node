@@ -4,6 +4,7 @@ const cors = require('cors')
 
 const authRouter = require('./auth/auth.routes').router
 const userControllers = require('./users/users.controllers');
+const userRouter = require('./users/users.routes').router
 const { toPromise } = require('./utils/toPromise');
 
 const app = express();
@@ -15,6 +16,7 @@ app.use('/api/v1/auth', authRouter)
 app.get('/api/v1/post', (req,res) => {
     res.status(401).json()
 })
+app.use('/api/v1/users', userRouter)
 
 app.get('/api/v1/users', async(req, res) => {
     //! userControllers.getAllUsers()

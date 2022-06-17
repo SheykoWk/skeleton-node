@@ -4,8 +4,8 @@ const { toPromise } = require('../utils/toPromise');
 
 const checkUsersCredential = async (email, password) => {
     const [user, err] = await toPromise(userControllers.getUserByEmail(email));
-    console.log(user)
-    if (user || !err) {
+    if (!err && user.dataValues) {
+        console.log(user)
         return crypto.comparePassword(password, user.password);
     } else {
         return null;
