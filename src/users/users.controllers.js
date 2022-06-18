@@ -61,7 +61,7 @@ const getAllUsers = async () => {
 }
 
 const getUserByEmail = async (email) => {
-    const user = await models.users.findAll({
+    const user = await models.users.findOne({
         where: {
             email
         }
